@@ -11,6 +11,7 @@ import mx.gob.sat.demo.model.Usuario;
 import mx.gob.sat.demo.repository.UserRepository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Repository;
  * @version 1.0.0
  * 
  */
+@Transactional
 @Repository
 public class UserRepositoryImpl implements UserRepository, Serializable {
 
@@ -49,9 +51,12 @@ public class UserRepositoryImpl implements UserRepository, Serializable {
 	 * @param User
 	 *            user
 	 */
+	@Transactional
 	@Override
 	public void addUser(Usuario user) {
 		getEntityManager().persist(user);
+		getEntityManager().flush();
+		
 	}
 
 	/**

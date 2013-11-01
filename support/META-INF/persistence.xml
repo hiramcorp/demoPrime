@@ -33,11 +33,11 @@
 			<property name="hibernate.use_sql_comments" value="false" />
 			<!-- END - Properties to be used ONLY during development -->
 			
-			<property name="hibernate.show_sql" value="true"/>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 			<property name="hibernate.connection.password" value="demopass"/>
 			<property name="hibernate.connection.url" value="jdbc:mysql://192.168.18.96:3306/demodb"/>
 			<property name="hibernate.connection.username" value="demouser"/>
+			<property name="hibernate.connection.autocommit" value="true" />
 			<property name="hibernate.c3p0.min_size" value="5"/>
 			<property name="hibernate.c3p0.max_size" value="20"/>
 			<property name="hibernate.c3p0.timeout" value="300"/>

@@ -56,9 +56,8 @@ http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.1.xsd">
 		id="transactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-
-	<tx:annotation-driven mode="aspectj"
-		transaction-manager="transactionManager" />
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<context:spring-configured />
 	<context:annotation-config />

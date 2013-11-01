@@ -13,6 +13,7 @@ import mx.gob.sat.demo.service.UserService;
 
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService, Serializable {
 
  /**
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService, Serializable {
   *
   * @param  User user
   */
- @Transactional(readOnly = false)
+ @Transactional
  @Override
  public void addUser(Usuario user) {
 	 getUserRepository().addUser(user);
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService, Serializable {
   *
   * @param  User user
   */
- @Transactional(readOnly = false)
+ @Transactional
  @Override
  public void deleteUser(Usuario user) {
 	 getUserRepository().deleteUser(user);
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService, Serializable {
   *
   * @param  User user
   */
- @Transactional(readOnly = false)
+ @Transactional
  @Override
  public void updateUser(Usuario user) {
 	 getUserRepository().updateUser(user);
