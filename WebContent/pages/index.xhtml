@@ -7,35 +7,59 @@
 </h:head>
 <h:body>
 	<h:form id="forma">
+	 <p:growl id="messages" showDetail="true"/>
 		<h:panelGrid id="panelUsuarios">
 			<p:dataTable id="users" var="user"
-				value="#{usuarioBeanController.userList}" style="width: 10%">
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="ID" />
-					</f:facet>
-					<h:outputText value="#{user.idUsuario}" />
+				value="#{usuarioBeanController.userList}" style="width: 10%" editable="true">
+				
+				<p:ajax event="rowEdit" listener="#{usuarioBeanController.onEdit}" update=":forma:messages" />  
+        		<p:ajax event="rowEditCancel" listener="#{usuarioBeanController.onCancel}" update=":forma:messages" />  
+				<p:column headerText="ID">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.idUsuario}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:outputText value="#{user.idUsuario}" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Nombre" />
-					</f:facet>
-					<h:outputText value="#{user.nombreUsuario}" />
+				<p:column headerText="Nombre">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.nombreUsuario}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:inputText value="#{user.nombreUsuario}" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Apellido Paterno" />
-					</f:facet>
-					<h:outputText value="#{user.apellidoPat}" />
+				<p:column headerText="Apellido Paterno">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.apellidoPat}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:inputText value="#{user.apellidoPat}" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Apellido Materno" />
-					</f:facet>
-					<h:outputText value="#{user.apellidoMat}" />
+				<p:column headerText="Apellido Materno">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.apellidoMat}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:inputText value="#{user.apellidoMat}" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
+				<p:column style="width:6%">  
+		            <p:rowEditor />  
+		        </p:column> 
 			</p:dataTable>
 		</h:panelGrid>
+		<h:panelGroup id="campos">
 			<table>
 				<tr>
 					<td><h:outputLabel for="nombreUsuario" value="Name : " /></td>
@@ -65,9 +89,13 @@
 					<td><p:commandButton id="agregarUsr" value="agregar"
 							actionListener="#{usuarioBeanController.addUser}" update="panelUsuarios" /></td>
 					<td><p:commandButton id="restear" value="limpiar campos"
-							actionListener="#{usuarioBeanController.reset}" /></td>
+							actionListener="#{usuarioBeanController.reset}" update="apellidoMaterno" /></td>
+					<td><p:commandButton id="reload" value="reload usuarios"
+							actionListener="#{usuarioBeanController.reload}" update="panelUsuarios" /></td>
+							
 				</tr>
 			</table>
+			</h:panelGroup>
 	</h:form>
 </h:body>
 </html>

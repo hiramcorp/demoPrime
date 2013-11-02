@@ -15,14 +15,14 @@ import mx.gob.sat.demo.model.Usuario;
 import mx.gob.sat.demo.service.UserService;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 @ManagedBean(name="usuarioBeanController")
-
-@Scope("request")
+@Scope("session")
 public class UsuarioBeanController implements Serializable {
 	
 	Logger log = Logger.getLogger(UsuarioBeanController.class);
@@ -47,7 +47,14 @@ public class UsuarioBeanController implements Serializable {
 							+ getUsuario().getNombreUsuario() + " "
 							+ getUsuario().getApellidoPat() + "!"));
 			setUsuario(new Usuario());
+			loadUsuarios();
 
+	}
+	
+	private void loadUsuarios(){
+		log.debug("Cargando usuarios");
+		userList = new ArrayList<Usuario>();
+		userList.addAll(getUserService().getUsers());
 	}
 
 	/**
@@ -57,6 +64,10 @@ public class UsuarioBeanController implements Serializable {
 		this.getUsuario().setNombreUsuario("");
 		this.getUsuario().setApellidoMat("");
 		this.getUsuario().setApellidoPat("");
+	}
+	
+	public void reload(){
+		loadUsuarios();
 	}
 
 	/**
@@ -108,9 +119,23 @@ public class UsuarioBeanController implements Serializable {
 	
 	@PostConstruct
     public void cargar() {
+		setUsuario(new Usuario());
 		log.debug("Cargando usuarios");
 		userList = new ArrayList<Usuario>();
 		userList.addAll(getUserService().getUsers());
-		setUsuario(new Usuario());
-    }   
+    }
+	
+	public void onEdit(RowEditEvent event) {
+		Usuario editado = ((Usuario)event.getObject());
+		getUserService().updateUser(editado);
+        FacesMessage msg = new FacesMessage("user Edited", ((Usuario) event.getObject()).getNombreUsuario());  
+  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }  
+      
+    public void onCancel(RowEditEvent event) {  
+        FacesMessage msg = new FacesMessage("ser Cancelled", ((Usuario) event.getObject()).getNombreUsuario());  
+  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }  
 }
